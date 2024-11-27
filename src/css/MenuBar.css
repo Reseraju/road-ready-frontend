@@ -1,0 +1,28 @@
+.custom-menu {
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+  }
+  
+  .logo-item {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Pushes other menu items to the right */
+  }
+  
+  .logo {
+    height: 40px; /* Adjust the height as needed */
+    margin-right: 10px;
+  }
+  
+  .company-name {
+    font-size: 1.2em;
+    color: white; /* Adjust to match your menu theme */
+    font-weight: bold;
+  }
+  
+  .custom-menu .item {
+    font-size: 1.1em;
+    color: white; /* Adjust color for menu items */
+  }
+  
