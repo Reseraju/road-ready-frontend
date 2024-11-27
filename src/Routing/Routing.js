@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import LoginPage from '../Components/Login'
 import Home from '../Components/Home'
+import About from '../Components/About'
 
 export default function Routing() {
   return (
@@ -13,6 +14,7 @@ export default function Routing() {
         <Route path="/review" element={<Review />} />
         <Route path="/fleets" element={<Fleets />} /> */}
         <Route path='/login' element={<LoginPage/>}/>
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   )
