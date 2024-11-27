@@ -1,5 +1,6 @@
 import LoginPage from "./Components/Login";
 import MenuExampleInverted from "./Components/MenuBar";
+import Home from './Components/Home';
 import Routing from "./Routing/Routing";
 
 function App(){
@@ -9,6 +10,8 @@ function App(){
             
             <MenuExampleInverted/>
             <Routing />
+            <Home />
+
         </div>
     )
 }
