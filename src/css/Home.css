@@ -159,13 +159,13 @@ body, html {
     font-size: 3rem;
     font-weight: bold;
     text-align: center;
-    margin: 3rem auto 1rem;
-    color: #eee7e7; /* Dark grey text */
+    margin: 3rem auto 4rem;
+    color: #0F0F0F; /* Dark grey text */
   }
   
   /* Subheading for the Information Section */
   .info-subheading {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     text-align: center;
     margin: 0 auto 2rem;
     background-color: #f9f9f9;
