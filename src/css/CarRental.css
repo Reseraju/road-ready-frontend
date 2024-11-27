@@ -1,0 +1,15 @@
+.ui.modal {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+  }
+  
+  .ui.modal .header {
+    background-color: #333;
+  }
+  
+  .ui.input input {
+    background-color: #222;
+    color: white;
+    border: 1px solid #444;
+  }
+  

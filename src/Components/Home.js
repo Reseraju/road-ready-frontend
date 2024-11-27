@@ -13,7 +13,7 @@ export default function Home() {
           </div>
         </div>
         <img 
-          src={process.env.PUBLIC_URL + '/images/download.jpg'} 
+          src={process.env.PUBLIC_URL + '/images/carImage.png'} 
           alt="Black Sport Car" 
           className="hero-image" 
         />

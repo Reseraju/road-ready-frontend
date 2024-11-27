@@ -6,9 +6,10 @@ function App(){
 
         <div className="main">
             
-            <MenuExampleInverted/>
+            
             
             <div style={{ backgroundColor: 'black', height: '100vh' }}>
+            <MenuExampleInverted/>
             <Routing />
             </div>
         </div>
