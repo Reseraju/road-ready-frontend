@@ -1,6 +1,4 @@
-import LoginPage from "./Components/Login";
 import MenuExampleInverted from "./Components/MenuBar";
-import Home from './Components/Home';
 import Routing from "./Routing/Routing";
 
 function App(){
@@ -9,9 +7,10 @@ function App(){
         <div className="main">
             
             <MenuExampleInverted/>
+            
+            <div style={{ backgroundColor: 'black', height: '100vh' }}>
             <Routing />
-            <Home />
-
+            </div>
         </div>
     )
 }

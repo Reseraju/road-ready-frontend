@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Menu, MenuItem } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import '../css/MenuBar.css'; 
+import '../css/MenuBar.css';
 
 export default class MenuExampleInverted extends Component {
   state = { activeItem: 'home' };
@@ -15,11 +15,11 @@ export default class MenuExampleInverted extends Component {
       <Menu inverted className="custom-menu">
         <MenuItem className="logo-item">
           <img
-            src="https://via.placeholder.com/40" // Replace with your logo URL
-            alt="Company Logo"
+            src="/images/CarProfile.png" 
+            alt="RoadReady Logo"
             className="logo"
           />
-          <span className="company-name">CompanyName</span>
+          <span className="company-name">RoadReady</span>
         </MenuItem>
 
         <Menu.Menu position="right">
@@ -27,43 +27,57 @@ export default class MenuExampleInverted extends Component {
             name="home"
             active={activeItem === 'home'}
             onClick={this.handleItemClick}
+            as={Link}
+            to="/"
           />
           <MenuItem
             name="about"
             active={activeItem === 'about'}
             onClick={this.handleItemClick}
+            as={Link}
+            to="/about"
           />
           <MenuItem
             name="contact"
             active={activeItem === 'contact'}
             onClick={this.handleItemClick}
+            as={Link}
+            to="/contact"
           />
           <MenuItem
             name="fleets"
             active={activeItem === 'fleets'}
             onClick={this.handleItemClick}
+            as={Link}
+            to="/fleets"
           />
           <MenuItem
             name="profile"
             active={activeItem === 'profile'}
             onClick={this.handleItemClick}
+            as={Link}
+            to="/profile"
           />
           <MenuItem
             name="reviews"
             active={activeItem === 'reviews'}
             onClick={this.handleItemClick}
+            as={Link}
+            to="/reviews"
           />
           <MenuItem
             name="login"
             active={activeItem === 'login'}
             onClick={this.handleItemClick}
             as={Link}
-            to="/login" // Navigates to the Login route
+            to="/login" 
           />
           <MenuItem
             name="register"
             active={activeItem === 'register'}
             onClick={this.handleItemClick}
+            as={Link}
+            to="/register"
           />
         </Menu.Menu>
       </Menu>
