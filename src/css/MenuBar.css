@@ -7,22 +7,22 @@
   .logo-item {
     display: flex;
     align-items: center;
-    margin-right: auto; /* Pushes other menu items to the right */
+    margin-right: auto; 
   }
   
   .logo {
-    height: 40px; /* Adjust the height as needed */
+    height: 40px; 
     margin-right: 10px;
   }
   
   .company-name {
     font-size: 1.2em;
-    color: white; /* Adjust to match your menu theme */
+    color: white; 
     font-weight: bold;
   }
   
   .custom-menu .item {
     font-size: 1.1em;
-    color: white; /* Adjust color for menu items */
+    color: white;
   }
   

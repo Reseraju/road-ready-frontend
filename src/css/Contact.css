@@ -1,0 +1,47 @@
+.contact-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000; /* Set background to black */
+    padding: 20px;
+  }
+  
+  .contact-form-container .ui.segment {
+    max-width: 500px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .contact-form-container .form-header {
+    text-align: center;
+    color: white; /* Header color white for better contrast */
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .ui.form input,
+  .ui.form textarea {
+    border-radius: 5px;
+    background-color: #222; /* Dark background for inputs */
+    color: white; /* Text color white for contrast */
+    border: 1px solid #555; /* Subtle border for inputs */
+  }
+  
+  .ui.form label {
+    color: white; /* Make labels white */
+  }
+  
+  .ui.form button {
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #2185d0; /* Semantic UI's blue color */
+    color: white;
+  }
+  
+  .ui.form button:hover {
+    background-color: #1678c2; /* Slightly darker blue */
+  }
+  
