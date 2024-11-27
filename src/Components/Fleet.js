@@ -1,24 +1,33 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardMeta, CardDescription, Image, Icon } from 'semantic-ui-react';
-import '../css/CarsFleet.css';
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
-const FleetCard = (props) => (
-  <Card>
-    <Image src={props.image} wrapped ui={false} />
-    <CardContent>
-      <CardHeader>{props.title}</CardHeader>
-      <CardMeta>{props.price}</CardMeta>
-      <CardDescription>
-        {props.description}
-      </CardDescription>
-    </CardContent>
-    <CardContent extra>
-      <a>
-        <Icon name='user' />
-        10 Friends
-      </a>
-    </CardContent>
-  </Card>
-);
-
-export default FleetCard;
+export default function FleetCard(props) {
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        alt="green iguana"
+        height="140"
+        image={props.image}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {props.title}
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          Lizards are a widespread group of squamate reptiles, with over 6,000
+          species, ranging across all continents except Antarctica
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </Card>
+  );
+}
