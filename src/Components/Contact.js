@@ -43,7 +43,6 @@ const ContactForm = () => (
         />
         <FormInput fluid label="Subject" placeholder="Subject" />
         <Form.TextArea label="Message" placeholder="Write your message here..." required />
-        {/* <FormCheckbox label="I agree to the Terms and Conditions" required /> */}
         <Button color="blue" type="submit">
           Submit
         </Button>

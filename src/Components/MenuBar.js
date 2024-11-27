@@ -4,9 +4,21 @@ import { Link } from 'react-router-dom';
 import '../css/MenuBar.css';
 
 export default class MenuExampleInvertedSegment extends Component {
-  state = { activeItem: 'home' };
+  state = { 
+    activeItem: 'home' ,
+    isSignedIn: false // Initial signed-in state
+  };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
+  // Function to simulate user login/logout
+  handleSignIn = () => {
+    this.setState({ isSignedIn: true });
+  };
+
+  handleSignOut = () => {
+    this.setState({ isSignedIn: false });
+  };
 
   render() {
     const { activeItem } = this.state;
@@ -68,20 +80,37 @@ export default class MenuExampleInvertedSegment extends Component {
               as={Link}
               to="/reviews"
             />
-            <MenuItem
-              name="login"
-              active={activeItem === 'login'}
-              onClick={this.handleItemClick}
-              as={Link}
-              to="/login"
-            />
-            <MenuItem
-              name="register"
-              active={activeItem === 'register'}
-              onClick={this.handleItemClick}
-              as={Link}
-              to="/register"
-            />
+            {!this.isSignedIn && (
+              <>
+                <MenuItem
+                  name="login"
+                  active={activeItem === 'login'}
+                  onClick={this.handleItemClick}
+                  as={Link}
+                  to="/login"
+                  className="secondary-button"
+                />
+                <MenuItem
+                  name="register"
+                  active={activeItem === 'register'}
+                  onClick={this.handleItemClick}
+                  as={Link}
+                  to="/register"
+                  className="primary-button"
+                />
+              </>
+            )}
+
+            {this.isSignedIn && (
+              <MenuItem
+                name="logout"
+                active={activeItem === 'logout'}
+                onClick={this.handleItemClick}
+                as={Link}
+                to="/logout"
+                className="secondary-button"
+              />
+            )}
           </Menu.Menu>
         </Menu>
       </Segment>

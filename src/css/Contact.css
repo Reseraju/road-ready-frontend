@@ -37,11 +37,11 @@
     margin-top: 15px;
     width: 100%;
     border-radius: 5px;
-    background-color: #2185d0; /* Semantic UI's blue color */
+    background-color: #ff6700; /* Semantic UI's blue color */
     color: white;
   }
   
   .ui.form button:hover {
-    background-color: #1678c2; /* Slightly darker blue */
+    background-color: #e65a00; /* Slightly darker blue */
   }
   
