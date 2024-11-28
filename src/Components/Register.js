@@ -2,14 +2,46 @@ import React from 'react';
 import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 import '../css/Register.css';
+import axios from 'axios';
 
 function RegisterPage() {
-  const [name, setName] = React.useState('');
+  const [username, setUsername] = React.useState('');
+  const [firstName, setFirstname] = React.useState('');
+  const [lastname, setLastname] = React.useState('');
+  const [phoneNo, setPhone] = React.useState('');
+  const [licenseNo, setLicenceNo] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [userType, setUserType] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [successMessage, setSuccessMessage] = React.useState('');
+
+  const signup = () => {
+    console.log("Signup initiated");
+    let user = {
+      email,
+      username,
+      password,
+      firstName,
+      lastname,
+      phoneNo,
+      licenseNo,
+      userType,
+    };
+    console.log("Payload to API:", user);
+ 
+    axios
+      .post("http://localhost:8081/api/auth/signup", user)
+      .then(() => alert("User added"))
+      .catch((e) => {
+        if (e.response) {
+          console.error("Response error:", e.response.data, e.response.status);
+        } else {
+          console.error("Request error:", e.message);
+        }
+      });
+  };
   
 //   const history = useHistory();
 
@@ -19,7 +51,7 @@ function RegisterPage() {
     setSuccessMessage('');
 
     // Validation logic
-    if (!name || !email || !password || !confirmPassword) {
+    if (!username || !firstName || !lastname || !email || !phoneNo || !licenseNo || !password || !confirmPassword || !userType) {
       setError('All fields are required.');
       return;
     }
@@ -31,7 +63,7 @@ function RegisterPage() {
 
     // Simulate user registration
     // In a real scenario, you would send the data to the server
-    console.log('User registered:', { name, email, password });
+    console.log('User registered:', { firstName, lastname, email, phoneNo, licenseNo, userType, password });
 
     // On successful registration, show success message and redirect
     setSuccessMessage('Registration successful! Redirecting...');
@@ -48,14 +80,34 @@ function RegisterPage() {
         </Header>
         <Form size="large" onSubmit={handleSubmit}>
           <Segment stacked>
-            {/* Full Name Field */}
+            {/* Username Field */}
             <Form.Input
               fluid
               icon="user"
               iconPosition="left"
-              placeholder="Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            {/* First Name Field */}
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="Firstname"
+              value={firstName}
+              onChange={(e) => setFirstname(e.target.value)}
+              required
+            />
+            {/* Last Name Field */}
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="Lastname"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
               required
             />
             {/* Email Field */}
@@ -67,6 +119,37 @@ function RegisterPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            {/* Phone Number Field */}
+            <Form.Input
+              fluid
+              icon="phone"
+              iconPosition="left"
+              placeholder="Phone number"
+              type="number"
+              value={phoneNo}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+            {/* Licence No Field */}
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="User type eg: Admin or Customer"
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
+              required
+            />
+            {/* Licence No Field */}
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="Licence No"
+              value={licenseNo}
+              onChange={(e) => setLicenceNo(e.target.value)}
               required
             />
             {/* Password Field */}
@@ -92,7 +175,7 @@ function RegisterPage() {
               required
             />
             {/* Submit Button */}
-            <Button color="blue" fluid size="large" type="submit">
+            <Button color="blue" fluid size="large" type="submit" onClick={signup}>
               Sign Up
             </Button>
           </Segment>

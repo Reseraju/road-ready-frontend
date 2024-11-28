@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react';
 import '../css/Login.css';
+import axios from 'axios';
 
 function LoginPage() {
   const [email, setEmail] = React.useState('');
@@ -9,6 +10,18 @@ function LoginPage() {
   const handleSubmit = () => {
     console.log('Email:', email, 'Password:', password);
     // Handle login logic here
+  };
+
+  const signin = () => {
+    let login = { email, password };
+    axios
+      .post("http://localhost:8081/api/auth/login", login)
+      .then((res) => {
+        let token = res.data.jwt;
+        alert("Use logged in successfully");
+        localStorage.setItem("token", token);
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -39,7 +52,7 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <Button color="blue" fluid size="large" type="submit">
+            <Button color="blue" fluid size="large" type="submit" onClick={signin}>
               Login
             </Button>
           </Segment>
