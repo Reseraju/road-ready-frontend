@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../css/Register.css';
 import axios from 'axios';
+import { Login } from '@mui/icons-material';
+import LoginPage from './Login';
 
 function RegisterPage() {
   const [username, setUsername] = React.useState('');
@@ -189,7 +191,7 @@ function RegisterPage() {
 
         {/* Link to Login page */}
         <Message>
-          Already have an account? <a href="#login">Log in</a>
+          Already have an account? <Link to="/login">Log in</Link>
         </Message>
       </Grid.Column>
     </Grid>

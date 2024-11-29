@@ -2,24 +2,24 @@ import React from 'react';
 import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react';
 import '../css/Login.css';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-
-  const handleSubmit = () => {
-    console.log('Email:', email, 'Password:', password);
-    // Handle login logic here
-  };
+  const { login } = useAuth(); // Access login function from context
+  const navigate = useNavigate(); 
 
   const signin = () => {
-    let login = { email, password };
+    let credentials = { email, password };
     axios
-      .post("http://localhost:8081/api/auth/login", login)
+      .post("http://localhost:8081/api/auth/login", credentials)
       .then((res) => {
         let token = res.data.jwt;
-        alert("Use logged in successfully");
         localStorage.setItem("token", token);
+        login(); // Update global login state
+        navigate('/'); 
       })
       .catch((e) => console.log(e));
   };
@@ -30,7 +30,7 @@ function LoginPage() {
         <Header as="h2" color="blue" textAlign="center">
           Log in to your account
         </Header>
-        <Form size="large" onSubmit={handleSubmit}>
+        <Form size="large">
           <Segment stacked>
             <Form.Input
               fluid
@@ -52,13 +52,13 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <Button color="blue" fluid size="large" type="submit" onClick={signin}>
+            <Button color="blue" fluid size="large" type="button" onClick={signin}>
               Login
             </Button>
           </Segment>
         </Form>
         <Message>
-          New to us? <a href="#register">Sign Up</a>
+          New to us? <Link to="/register">Sign Up</Link>
         </Message>
       </Grid.Column>
     </Grid>

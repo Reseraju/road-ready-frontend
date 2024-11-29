@@ -1,12 +1,20 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import LoginPage from '../Components/Login'
 import Home from '../Components/Home'
 import ContactForm from '../Components/Contact'
 import About from '../Components/About'
 import RegisterPage from '../Components/Register'
-import FleetCard from '../Components/Fleet'
+
 import CarsFleet from '../Components/CarsFleet'
+import PersistentDrawerLeft from '../Components/Profile'
+import Account from '../Components/Profile_Sidebar/Account'
+import Notifications from '../Components/Profile_Sidebar/Notifications'
+import NoMatch from './NoMatch'
+import Reservations from '../Components/Profile_Sidebar/Reservations'
+import Payment from '../Components/Profile_Sidebar/Payment'
+import History from '../Components/Profile_Sidebar/History'
+import Feedback from '../Components/Profile_Sidebar/Feedback'
 
 export default function Routing() {
   return (
@@ -15,11 +23,24 @@ export default function Routing() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactForm />} />
-        {/*
-        <Route path="/review" element={<Review />} /> */}
         <Route path="/fleets" element={<CarsFleet />} />
         <Route path='/login' element={<LoginPage/>}/>
         <Route path="/register" element={<RegisterPage />} />
+        
+
+        {/* Profile-related Routes */}
+        <Route path="/profile" element={<PersistentDrawerLeft />}>
+          {/* Redirect from /profile to /profile/account */}
+          <Route index element={<Navigate to="account" />} />
+          <Route path="account" element={<Account />} />
+          <Route path="reservations" element={<Reservations />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="history" element={<History />} />
+          <Route path="feedback" element={<Feedback />} />
+          <Route path="reservations" element={<Reservations />} />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+
       </Routes>
     </div>
   )
