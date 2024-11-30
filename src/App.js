@@ -1,5 +1,6 @@
 import MenuExampleInverted from "./Components/MenuBar";
 import Routing from "./Routing/Routing";
+import './App.css';
 
 function App(){
     return(
@@ -8,7 +9,7 @@ function App(){
             
             
             
-            <div style={{ backgroundColor: 'black', height: '100vh' }}>
+            <div style={{ backgroundColor: 'black', height: '100vh', flex: 1, overflowY: 'auto'}}>
             <MenuExampleInverted/>
             <Routing />
             </div>

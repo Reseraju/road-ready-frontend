@@ -15,6 +15,7 @@ import Reservations from '../Components/Profile_Sidebar/Reservations'
 import Payment from '../Components/Profile_Sidebar/Payment'
 import History from '../Components/Profile_Sidebar/History'
 import Feedback from '../Components/Profile_Sidebar/Feedback'
+import CarDetails from '../Components/CarDetails'
 
 export default function Routing() {
   return (
@@ -24,6 +25,7 @@ export default function Routing() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/fleets" element={<CarsFleet />} />
+        <Route path="/car-details/:id" element={<CarDetails />} />
         <Route path='/login' element={<LoginPage/>}/>
         <Route path="/register" element={<RegisterPage />} />
         
@@ -40,6 +42,8 @@ export default function Routing() {
           <Route path="reservations" element={<Reservations />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
+
+
 
       </Routes>
     </div>

@@ -33,6 +33,13 @@ const MenuExampleInvertedSegment = () => {
             to="/"
           />
           <MenuItem
+            name="fleets"
+            active={activeItem === 'fleets'}
+            onClick={handleItemClick}
+            as={Link}
+            to="/fleets"
+          />
+          <MenuItem
             name="about"
             active={activeItem === 'about'}
             onClick={handleItemClick}
