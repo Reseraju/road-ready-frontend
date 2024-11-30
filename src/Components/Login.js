@@ -17,12 +17,14 @@ function LoginPage() {
       .post("http://localhost:8081/api/auth/login", credentials)
       .then((res) => {
         let token = res.data.jwt;
+        let id = res.data.userId; // Assuming the response includes userId
         localStorage.setItem("token", token);
-        login(); // Update global login state
-        navigate('/'); 
+        login(id); // Pass the userId to the context
+        navigate('/');
       })
       .catch((e) => console.log(e));
   };
+  
 
   return (
     <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">

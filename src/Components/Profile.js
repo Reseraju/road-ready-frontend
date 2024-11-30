@@ -38,10 +38,6 @@ const ProfileSidebar = () => (
       <Icon name="comment alternate" />
       Feedback
     </MenuItem>
-    <MenuItem>
-      <Icon name="sign-out" />
-      Logout
-    </MenuItem>
   </Sidebar>
 );
 
