@@ -15,6 +15,7 @@ import Reservations from '../Components/Profile_Sidebar/Reservations'
 import Payment from '../Components/Profile_Sidebar/Payment'
 import History from '../Components/Profile_Sidebar/History'
 import Feedback from '../Components/Profile_Sidebar/Feedback'
+import Logout from '../Components/Profile_Sidebar/Logout'
 import CarDetails from '../Components/CarDetails'
 
 export default function Routing() {
@@ -40,6 +41,7 @@ export default function Routing() {
           <Route path="history" element={<History />} />
           <Route path="feedback" element={<Feedback />} />
           <Route path="reservations" element={<Reservations />} />
+          <Route path="logout" element={<Logout />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
 

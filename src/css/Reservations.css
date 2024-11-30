@@ -1,0 +1,70 @@
+.reservations {
+    font-family: Arial, sans-serif;
+    color: #f0f0f0;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #181818;
+    border-radius: 8px;
+    width: 95%;
+    max-width: 1000px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #ffffff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+  }
+  
+  .reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .reservations-table th,
+  .reservations-table td {
+    text-align: left;
+    padding: 10px 15px;
+  }
+  
+  .reservations-table th {
+    background-color: #333;
+    color: #ffffff;
+    font-weight: bold;
+    border-bottom: 2px solid #444;
+  }
+  
+  .reservations-table td {
+    background-color: #222;
+    color: #f0f0f0;
+    border-bottom: 1px solid #333;
+  }
+  
+  .reservations-table tr:hover {
+    background-color: #444;
+  }
+  
+  .status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .status.confirmed {
+    color: #ffffff;
+    background-color: green;
+  }
+  
+  .status.cancelled {
+    color: #ffffff;
+    background-color: red;
+  }
+  
+  .status.completed {
+    color: #ffffff;
+    background-color: blue;
+  }
+  
