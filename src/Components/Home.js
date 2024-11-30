@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/Home.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+
+  const [location, setLocation] = useState("");
+  const [carType, setCarType] = useState("");
+  const [cars, setCars] = useState([]);
+  const navigate = useNavigate();
+
+  // fetching car data
+  useEffect(()=>{
+    axios.get('http://localhost:8081/cars/getAllCars')
+    .then((res)=>{
+      if(res.data){
+        setCars(res.data);
+      }
+    })
+    .catch((e)=>console.error("rror fetching car data: ",e))
+  },[])
+
+  // navigating to fleets
+  const navigateToFleets=()=>{
+    navigate('/fleets', { state: { location, carType } });
+  };
+
+
   return (
     <div className="home-container">
       <div className="hero-section">
@@ -24,7 +49,7 @@ export default function Home() {
           {/* Search Section Code */}
           <div className="search-field">
             <label>Location</label>
-            <input type="text" placeholder="Search a location" />
+            <input type="text" placeholder="Search a location" value={location} onChange={(e)=>setLocation(e.target.value)}/>
           </div>
           <div className="search-field">
             <label>Pick-up date</label>
@@ -36,13 +61,18 @@ export default function Home() {
           </div>
           <div className="search-field">
             <label>Type of vehicle</label>
-            <select>
-              <option>Select Vehicle type</option>
+            <select value={carType} onChange={(e)=>setCarType(e.target.value)}>
+              <option value="">Select Vehicle type</option>
+              <option value="family">Family</option>
+              <option value="sports">Sports</option>
+              <option value="luxury">Luxury</option>
+              <option value="offroad">OffRoad</option>
+              <option value="suv">SUV</option>
             </select>
           </div>
-          <button className="search-button">Find a Vehicle →</button>
+          <button className="search-button" onClick={navigateToFleets}>Find a Vehicle →</button>
         </div>
-
+      
         
 
         <div className="info-heading">How it Works</div>

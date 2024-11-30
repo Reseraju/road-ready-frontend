@@ -1,41 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import { Paper, TextField, Modal, Box as MuiBox } from '@mui/material';
+import { Paper } from '@mui/material';
 import ReservationModal from './ReservationModal';
+import { useAuth } from '../context/AuthContext';
 
 export default function CarDetails() {
   const location = useLocation();
   const { car } = location.state;
 
+  const { isSignedIn } = useAuth(); 
+  const navigate = useNavigate();
+
   const [openModal, setOpenModal] = useState(false);
-  
+
   // Function to extract specifications from the specifications string
   const extractSpecifications = (specifications) => {
     const specRegex = /([\w\s]+):\s?([^,]+)/g; // Matches "key: value" pairs
     let matches;
     const specObj = {};
-  
+
     while ((matches = specRegex.exec(specifications)) !== null) {
       const key = matches[1].trim(); // Extract key
       const value = matches[2].trim(); // Extract value
       specObj[key] = value; // Add to the object as-is
     }
-  
+
     return specObj;
   };
-  
-  
 
   const carSpecs = extractSpecifications(car.specifications);
 
   const handleAddToWishlist = () => {
-    // Implement logic for adding the car to the wishlist
+    if (!isSignedIn) {
+      navigate('/login');
+      return;
+    }
+
+    // Logic for adding the car to the wishlist
     console.log(`Car ${car.model} added to wishlist!`);
     alert(`${car.model} has been added to your wishlist.`);
+  };
+
+  const handleOpenReservationModal = () => {
+    if (!isSignedIn) {
+      navigate('/login');
+      return;
+    }
+
+    setOpenModal(true);
   };
 
   const handleMakeReservation = (pickupDate, dropoffDate) => {
@@ -54,7 +70,7 @@ export default function CarDetails() {
           boxShadow: 3,
           backgroundColor: '#fff',
           display: 'flex',
-          flexDirection: 'row',  // Landscape layout
+          flexDirection: 'row', // Landscape layout
           alignItems: 'flex-start',
         }}
       >
@@ -80,11 +96,13 @@ export default function CarDetails() {
           <Typography variant="body1" sx={{ mb: 2, color: '#777' }}>
             <strong>Specifications:</strong>
             <ul>
-                {Object.entries(carSpecs).map(([key, value]) => (
-                <li key={key}>{key}: {value}</li>
-                ))}
+              {Object.entries(carSpecs).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value}
+                </li>
+              ))}
             </ul>
-            </Typography>
+          </Typography>
           <Typography variant="h6" sx={{ mb: 2, color: '#333' }}>
             Price Per Day: <strong>${car.price}</strong>
           </Typography>
@@ -115,7 +133,7 @@ export default function CarDetails() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => setOpenModal(true)}
+              onClick={handleOpenReservationModal}
               sx={{
                 width: '48%',
                 padding: '10px',
@@ -137,79 +155,6 @@ export default function CarDetails() {
         car={car}
         onReserve={handleMakeReservation}
       />
-
-      {/* Reservation Modal */}
-      {/* <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <MuiBox
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            backgroundColor: 'white',
-            padding: 3,
-            borderRadius: '10px',
-            boxShadow: 24,
-          }}
-        >
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Reserve {car.model}
-          </Typography>
-          <TextField
-            label="Pick-up Date"
-            type="date"
-            fullWidth
-            variant="outlined"
-            value={pickupDate}
-            onChange={(e) => setPickupDate(e.target.value)}
-            sx={{ mb: 2 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            label="Drop-off Date"
-            type="date"
-            fullWidth
-            variant="outlined"
-            value={dropoffDate}
-            onChange={(e) => setDropoffDate(e.target.value)}
-            sx={{ mb: 2 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => setOpenModal(false)}
-              sx={{
-                width: '48%',
-                padding: '10px',
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleMakeReservation}
-              sx={{
-                width: '48%',
-                padding: '10px',
-                backgroundColor: '#1976d2',
-                '&:hover': {
-                  backgroundColor: '#1565c0',
-                },
-              }}
-            >
-              Confirm Reservation
-            </Button>
-          </Box>
-        </MuiBox>
-      </Modal> */}
     </Box>
   );
 }
