@@ -13,6 +13,7 @@ import {
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useAuth } from '../context/AuthContext';
+import "../css/ReseravationModal.css";
 
 const steps = ['Enter Dates', 'Make Payment', 'Confirmation'];
 
@@ -168,7 +169,7 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
           {activeStep === 2 && (
             <Typography variant="body1" sx={{ mb: 2 }}>
               Reservation complete! Your car is reserved for the following dates:
-              <ul>
+              <ul className='specifications-list'>
                 <li>
                   <strong>Pick-up Date:</strong> {pickupDate || 'Not set'}
                 </li>

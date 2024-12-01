@@ -18,9 +18,18 @@ function LoginPage() {
       .then((res) => {
         let token = res.data.jwt;
         let id = res.data.userId; // Assuming the response includes userId
+        let userType = res.data.userType;
+        let jwt = res.data.jwt
+        console.log(id, userType, jwt);
         localStorage.setItem("token", token);
-        login(id); // Pass the userId to the context
-        navigate('/');
+        login(id, userType, jwt); // Pass the userId to the context
+        if(userType === "Admin"){
+          navigate('/adminhome');
+        }
+        else if(userType === "Customer"){
+          navigate('/');
+          }
+        
       })
       .catch((e) => console.log(e));
   };

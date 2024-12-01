@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { Paper } from '@mui/material';
 import ReservationModal from './ReservationModal';
 import { useAuth } from '../context/AuthContext';
+import "../css/CarDetails.css";
 
 export default function CarDetails() {
   const location = useLocation();
@@ -63,7 +64,7 @@ export default function CarDetails() {
     <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
       <Paper
         sx={{
-          maxWidth: 1000,
+          maxWidth: 2000,
           width: '100%',
           p: 3,
           borderRadius: '10px',
@@ -93,9 +94,9 @@ export default function CarDetails() {
           <Typography variant="h6" sx={{ mb: 2, color: '#555' }}>
             Location: {car.location}
           </Typography>
-          <Typography variant="body1" sx={{ mb: 2, color: '#777' }}>
+          <Typography variant="outlined" sx={{ mb: 2, color: '#777' }}>
             <strong>Specifications:</strong>
-            <ul>
+            <ul className="specifications-list">
               {Object.entries(carSpecs).map(([key, value]) => (
                 <li key={key}>
                   {key}: {value}

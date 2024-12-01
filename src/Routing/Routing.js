@@ -9,7 +9,6 @@ import RegisterPage from '../Components/Register'
 import CarsFleet from '../Components/CarsFleet'
 import PersistentDrawerLeft from '../Components/Profile'
 import Account from '../Components/Profile_Sidebar/Account'
-import Notifications from '../Components/Profile_Sidebar/Notifications'
 import NoMatch from './NoMatch'
 import Reservations from '../Components/Profile_Sidebar/Reservations'
 import Payment from '../Components/Profile_Sidebar/Payment'
@@ -17,8 +16,17 @@ import History from '../Components/Profile_Sidebar/History'
 import Feedback from '../Components/Profile_Sidebar/Feedback'
 import Logout from '../Components/Profile_Sidebar/Logout'
 import CarDetails from '../Components/CarDetails'
+import AdminDashboard from '../Components/AdminDashboard/AdminHome'
+import CarList from '../Components/AdminDashboard/CarList'
+import Bookings from '../Components/AdminDashboard/Bookings'
+import Customers from '../Components/AdminDashboard/Customers'
+import Earnings from '../Components/AdminDashboard/Earnings'
+import { useAuth } from '../context/AuthContext';
+import Reports from '../Components/AdminDashboard/Reports'
 
 export default function Routing() {
+
+  const {userType} = useAuth();
   return (
     <div>
       <Routes>
@@ -31,7 +39,7 @@ export default function Routing() {
         <Route path="/register" element={<RegisterPage />} />
         
 
-        {/* Profile-related Routes */}
+        {/* Profile route--- if userType is Customer */}
         <Route path="/profile" element={<PersistentDrawerLeft />}>
           {/* Redirect from /profile to /profile/account */}
           <Route index element={<Navigate to="account" />} />
@@ -46,6 +54,16 @@ export default function Routing() {
         </Route>
 
 
+        {/* Profile route--- if userType is Admin */}
+        <Route path="/adminhome" element={<AdminDashboard />} >
+          <Route index element={<Navigate to="carlist" />} />
+          <Route path="carlist" element={<CarList />} />
+          <Route path="bookings" element={<Bookings />} />
+          <Route path="earning" element={<Earnings />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
 
       </Routes>
     </div>

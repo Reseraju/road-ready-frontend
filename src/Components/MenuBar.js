@@ -1,14 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Menu, MenuItem, Segment } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/MenuBar.css';
-import { useAuth } from '../context/AuthContext'; // Adjust the path
+import { useAuth } from '../context/AuthContext';
 
 const MenuExampleInvertedSegment = () => {
-  const { isSignedIn, logout } = useAuth(); // Access context
+  const { isSignedIn, logout, userType } = useAuth();
   const [activeItem, setActiveItem] = React.useState('home');
+  const navigate = useNavigate();
 
-  const handleItemClick = (e, { name }) => setActiveItem(name);
+  const handleItemClick = (e, { name }) => {
+    setActiveItem(name); // Update the active item
+  };
+
+  const navigateToProfile = () => {
+    setActiveItem('profile'); // Set profile as the active item
+    if (userType === 'Admin') {
+      navigate('/adminHome');
+    } else {
+      navigate('/profile');
+    }
+  };
 
   return (
     <Segment inverted>
@@ -74,26 +86,21 @@ const MenuExampleInvertedSegment = () => {
             </>
           ) : (
             <>
-
-            <MenuItem
-              name="Profile"
-              active={activeItem === 'profile'}
-              onClick={handleItemClick}
-              as={Link}
-              to="/profile"
-            />
-
-            <MenuItem
-              name="logout"
-              active={activeItem === 'logout'}
-              onClick={logout}
-              as={Link}
-              to="/logout"
-              className="secondary-button"
-            />
-            
+              <MenuItem
+                name="profile"
+                active={activeItem === 'profile'}
+                onClick={navigateToProfile} // Update and navigate
+              />
+              <MenuItem
+                name="logout"
+                active={activeItem === 'logout'}
+                onClick={() => {
+                  logout();
+                  setActiveItem('logout'); // Optional: Update activeItem to logout
+                }}
+                className="secondary-button"
+              />
             </>
-            
           )}
         </Menu.Menu>
       </Menu>

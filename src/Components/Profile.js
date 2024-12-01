@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, Icon, SidebarPushable, SidebarPusher, Segment, Header, Image } from 'semantic-ui-react';
+import { useAuth } from '../context/AuthContext';
 
-const ProfileSidebar = () => (
+// ProfileSidebar Component
+const ProfileSidebar = ({ userType }) => (
   <Sidebar as={Menu} direction="left" vertical visible width="wide">
     <MenuItem>
       <Image
@@ -15,7 +17,7 @@ const ProfileSidebar = () => (
         John Doe
       </Header>
       <p style={{ textAlign: 'center', color: 'gray' }}>
-        Software Engineer at ABC Corp
+        {userType || 'Guest'}
       </p>
     </MenuItem>
     <MenuItem as={Link} to="account">
@@ -41,10 +43,14 @@ const ProfileSidebar = () => (
   </Sidebar>
 );
 
+// ProfileSidebarExample Component
 const ProfileSidebarExample = () => {
+  const { userType } = useAuth(); // Fetch userType from AuthContext
+
   return (
     <SidebarPushable as={Segment} style={{ minHeight: '100vh', overflow: 'hidden' }}>
-      <ProfileSidebar />
+      {/* Pass userType as a prop */}
+      <ProfileSidebar userType={userType} />
       <SidebarPusher style={{ marginLeft: '150px' }}>
         <Segment basic>
           <Header as="h3" style={{ color: 'white' }}>

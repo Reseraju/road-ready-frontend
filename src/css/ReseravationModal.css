@@ -1,0 +1,15 @@
+.specifications-list {
+    background-color: #f9f9f9 !important; /* Light gray background */
+    padding: 10px;
+    border-radius: 8px;
+    list-style-type: none; /* Remove default bullets */
+  }
+  
+  .specifications-list li{
+    background-color: #f9f9f9;
+    color: black;
+  }
+  
+  strong{
+    color: rgb(90, 89, 89);
+  }
