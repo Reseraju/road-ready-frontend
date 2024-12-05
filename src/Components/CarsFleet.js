@@ -7,11 +7,11 @@ import "../css/CarsFleet.css";
 const CarsFleet = () => {
   const [carList, setCarList] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
-  const [filters, setFilters] = useState({ location: "", vehicleType: "", priceRange: "" });
+  const [filters, setFilters] = useState({ location: "", carType: "", priceRange: "" });
 
   const location = useLocation();
   const { state } = location || {};
-  const { location: initialLocation, vehicleType: initialVehicleType } = state || {};
+  const { location: initialLocation, carType: initialVehicleType } = state || {};
 
   // Fetch cars from the backend
   const fetchCars = () => {
@@ -47,7 +47,7 @@ const CarsFleet = () => {
     const filtered = carList.filter(
       (car) =>
         (!filters.location || car.location.toLowerCase().includes(filters.location.toLowerCase())) &&
-        (!filters.vehicleType || car.carType.toLowerCase() === filters.vehicleType.toLowerCase()) &&
+        (!filters.carType || car.carType.toLowerCase() === filters.carType.toLowerCase()) &&
         (!filters.priceRange || car.pricePerDay <= parseInt(filters.priceRange, 10)) &&
         car.availability
     );
@@ -55,7 +55,7 @@ const CarsFleet = () => {
   };
 
   const resetFilters = () => {
-    setFilters({ location: "", vehicleType: "", priceRange: "" });
+    setFilters({ location: "", carType: "", priceRange: "" });
     setFilteredCars(carList); // Reset to all cars
   };
 
@@ -70,8 +70,8 @@ const CarsFleet = () => {
           value={filters.location}
           onChange={handleFilterChange}
         />
-        <select name="vehicleType" value={filters.vehicleType} onChange={handleFilterChange}>
-          <option value="">All Vehicle Types</option>
+        <select name="vehicleType" value={filters.carType} onChange={handleFilterChange}>
+          <option value="">All Car Types</option>
           <option value="family">Family</option>
           <option value="sports">Sports</option>
           <option value="luxury">Luxury</option>

@@ -4,11 +4,8 @@ import './App.css';
 
 function App(){
     return(
-
+        
         <div className="main">
-            
-            
-            
             <div style={{ backgroundColor: 'black', height: '100vh', flex: 1, overflowY: 'auto'}}>
             <MenuExampleInverted/>
             <Routing />

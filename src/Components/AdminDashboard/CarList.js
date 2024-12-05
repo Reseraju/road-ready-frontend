@@ -6,8 +6,17 @@ export default function CarList() {
   const [cars, setCars] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingCar, setEditingCar] = useState(null);
+  const [isAdding, setIsAdding] = useState(false); 
+  const [newCar, setNewCar] = useState({ model: '', make: '', location:'', specifications: '', pricePerDay: '', imageURL: '', carType: '', availability:'' });
   const [loading, setLoading] = useState(false);
   const [specifications, setSpecifications] = useState({}); 
+  const [newSpecifications, setNewSpecifications] = useState({
+    Year: '',
+    Transmission: '',
+    'Fuel Type': '',
+    'Seating Capacity': '',
+    Color: '',
+  });
 
   const token = localStorage.getItem("token");
 
@@ -91,6 +100,60 @@ export default function CarList() {
     setIsEditing(true);
   };
 
+
+  // Handle input changes for adding a car
+  const handleAddChange = (e) => {
+    const { name, value } = e.target;
+    setNewCar({ ...newCar, [name]: value });
+  };
+
+  const handleSpecChange = (e) => {
+    const { name, value } = e.target;
+    setNewSpecifications({ ...newSpecifications, [name]: value });
+  };
+
+  // Save a new car
+  const addCar = async () => {
+    try {
+      // Combine specifications into a single string
+      const specificationsString = Object.entries(newSpecifications)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ');
+
+      const carToAdd = { ...newCar, specifications: specificationsString };
+      console.log('Payload:', carToAdd);
+      await axios.post('http://localhost:8081/cars/saveNewCar', carToAdd, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      message.success('Car added successfully!');
+      setIsAdding(false);
+      setNewCar({
+        make: '',
+        model: '',
+        location: '',
+        specifications: '',
+        pricePerDay: '',
+        imageURL: '',
+        availability: '',
+        carType: '',
+      });
+      setNewSpecifications({
+        Year: '',
+        Transmission: '',
+        'Fuel Type': '',
+        'Seating Capacity': '',
+        Color: '',
+      });
+      fetchCars();
+    } catch (error) {
+      message.error('Failed to add car!');
+    }
+  };
+
   useEffect(() => {
     fetchCars();
   }, []);
@@ -124,6 +187,11 @@ export default function CarList() {
       key: 'make',
     },
     {
+      title: 'Location',
+      dataIndex: 'location',
+      key: 'location',
+    },
+    {
       title: 'Specifications',
       dataIndex: 'specifications',
       key: 'specifications',
@@ -133,6 +201,21 @@ export default function CarList() {
       dataIndex: 'pricePerDay',
       key: 'pricePerDay',
       render: (rate) => `$${rate}`,
+    },
+    {
+      title: 'Car Type',
+      dataIndex: 'carType',
+      key: 'carType',
+    },
+    {
+      title: 'Availability',
+      dataIndex: 'availability',
+      key: 'availability',
+      render: (availability) => (
+        <span style={{ color: availability === 'Available' || availability === true ? 'green' : 'red' }}>
+          {availability === 'Available' || availability === true ? 'Available' : 'Not Available'}
+        </span>
+      ),
     },
     {
       title: 'Actions',
@@ -158,7 +241,23 @@ export default function CarList() {
 
   return (
     <div>
-      <h2>Car List</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2
+          style={{
+            color: '#333',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            backgroundColor: '#f0f0f0',
+            padding: '10px',
+            marginTop: '20px',
+          }}
+        >
+          Cars List
+        </h2>
+        <Button type="primary" onClick={() => setIsAdding(true)}>
+          Add Car
+        </Button>
+      </div>
       <Table
         dataSource={cars}
         columns={columns}
@@ -194,6 +293,14 @@ export default function CarList() {
                 onChange={handleEditChange}
               />
             </Form.Item>
+            <Form.Item label="Location">
+              <Input
+                placeholder="Location"
+                name="location"
+                value={editingCar.location || ''}
+                onChange={handleEditChange}
+              />
+            </Form.Item>
             <Form.Item label="Specifications">
               {Object.entries(specifications).map(([key, value]) => (
                 <Input
@@ -223,8 +330,128 @@ export default function CarList() {
                 onChange={handleEditChange}
               />
             </Form.Item>
+            <Form.Item label="Car Type">
+              <Input
+                placeholder="Car Type"
+                name="carType"
+                value={editingCar.carType || ''}
+                onChange={handleEditChange}
+              />
+            </Form.Item>
           </Form>
         )}
+      </Modal>
+
+      {/* Modal for Adding new car */}
+      <Modal
+        title="Add Car"
+        visible={isAdding}
+        onCancel={() => setIsAdding(false)}
+        onOk={addCar}
+        okText="Add"
+      >
+        <Form layout="vertical">
+          <Form.Item label="Make">
+            <Input
+              placeholder="Make"
+              name="make"
+              value={newCar.make}
+              onChange={handleAddChange}
+            />
+          </Form.Item>
+          <Form.Item label="Model">
+            <Input
+              placeholder="Model"
+              name="model"
+              value={newCar.model}
+              onChange={handleAddChange}
+            />
+          </Form.Item>
+          <Form.Item label="Location">
+            <Input
+              placeholder="Location"
+              name="location"
+              value={newCar.location}
+              onChange={handleAddChange}
+            />
+          </Form.Item>
+          <Form.Item label="Specifications">
+            <Form.Item label="Year">
+              <Input
+                placeholder="Year"
+                name="Year"
+                value={newSpecifications.Year}
+                onChange={handleSpecChange}
+              />
+            </Form.Item>
+            <Form.Item label="Transmission">
+              <Input
+                placeholder="Transmission"
+                name="Transmission"
+                value={newSpecifications.Transmission}
+                onChange={handleSpecChange}
+              />
+            </Form.Item>
+            <Form.Item label="Fuel Type">
+              <Input
+                placeholder="Fuel Type"
+                name="Fuel Type"
+                value={newSpecifications['Fuel Type']}
+                onChange={handleSpecChange}
+              />
+            </Form.Item>
+            <Form.Item label="Seating Capacity">
+              <Input
+                placeholder="Seating Capacity"
+                name="Seating Capacity"
+                value={newSpecifications['Seating Capacity']}
+                onChange={handleSpecChange}
+              />
+            </Form.Item>
+            <Form.Item label="Color">
+              <Input
+                placeholder="Color"
+                name="Color"
+                value={newSpecifications.Color}
+                onChange={handleSpecChange}
+              />
+            </Form.Item>
+          </Form.Item>
+          <Form.Item label="Daily Rate">
+            <Input
+              placeholder="Daily Rate"
+              name="pricePerDay"
+              value={newCar.pricePerDay}
+              onChange={handleAddChange}
+              type="number"
+            />
+          </Form.Item>
+          <Form.Item label="Image URL">
+            <Input
+              placeholder="Image URL"
+              name="imageURL"
+              value={newCar.imageURL}
+              onChange={handleAddChange}
+            />
+          </Form.Item>
+          <Form.Item label="Car Type">
+            <Input
+              placeholder="Car Type"
+              name="carType"
+              value={newCar.carType}
+              onChange={handleAddChange}
+            />
+          </Form.Item>
+          <Form.Item label="Availability">
+            <Input
+              placeholder="Availability"
+              name="availability"
+              value={newCar.availability}
+              onChange={handleAddChange}
+            />
+          </Form.Item>
+          
+        </Form>
       </Modal>
     </div>
   );

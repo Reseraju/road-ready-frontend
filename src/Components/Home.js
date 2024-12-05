@@ -64,7 +64,6 @@ export default function Home() {
             <select value={carType} onChange={(e)=>setCarType(e.target.value)}>
               <option value="">Select Vehicle type</option>
               <option value="family">Family</option>
-              <option value="sports">Sports</option>
               <option value="luxury">Luxury</option>
               <option value="offroad">OffRoad</option>
               <option value="suv">SUV</option>
