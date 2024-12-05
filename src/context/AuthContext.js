@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -7,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [userType, setUserType] = useState(null);
   const [jwt, setJwt] = useState(null);
+  const navigate = useNavigate();
 
   const login = (id, userType, jwt ) => {
     setIsSignedIn(true);
@@ -18,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsSignedIn(false);
     setUserId(null); // Clear the userId during logout
+    navigate("/")
   };
 
   return (

@@ -33,10 +33,10 @@ const AdminDashboard = () => {
         navigate('bookings'); 
         break;
       case '3':
-        navigate('earnings');
+        navigate('customers');
         break;
       case '4':
-        navigate('customers');
+        navigate('earnings');
         break;
       case '5':
         navigate('reports');
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
             {
               key: '1',
               icon: <CarOutlined />,
-              label: 'Car List',
+              label: 'Cars',
             },
             {
               key: '2',
@@ -71,13 +71,13 @@ const AdminDashboard = () => {
             },
             {
               key: '3',
-              icon: <DollarCircleOutlined />,
-              label: 'Earnings',
+              icon: <UsergroupAddOutlined />,
+              label: 'Customers',
             },
             {
               key: '4',
-              icon: <UsergroupAddOutlined />,
-              label: 'Customers',
+              icon: <DollarCircleOutlined />,
+              label: 'Earnings',
             },
             {
               key: '5',

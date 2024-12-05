@@ -10,11 +10,11 @@ const MenuExampleInvertedSegment = () => {
   const navigate = useNavigate();
 
   const handleItemClick = (e, { name }) => {
-    setActiveItem(name); // Update the active item
+    setActiveItem(name); 
   };
 
   const navigateToProfile = () => {
-    setActiveItem('profile'); // Set profile as the active item
+    setActiveItem('profile'); 
     if (userType === 'Admin') {
       navigate('/adminHome');
     } else {
@@ -89,7 +89,7 @@ const MenuExampleInvertedSegment = () => {
               <MenuItem
                 name="profile"
                 active={activeItem === 'profile'}
-                onClick={navigateToProfile} // Update and navigate
+                onClick={navigateToProfile} 
               />
               <MenuItem
                 name="logout"
