@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from '../../context/AuthContext'; // Make sure the hook path is correct
+import { useAuth } from '../../context/AuthContext'; // Ensure the correct path
+import { Card, Row, Col, Typography, Spin, Alert } from "antd";
+import '../../css/Account.css';
+
+const { Title, Text } = Typography;
 
 const Account = () => {
   const [userData, setUserData] = useState(null);
@@ -44,69 +48,100 @@ const Account = () => {
   }, [userId]);
 
   if (loading) {
-    return <div>Loading...</div>; // Loading state
+    return (
+      <div style={{ textAlign: "center", marginTop: "20%" }}>
+        <Spin tip="Loading..." size="large" />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>; // Error state
+    return (
+      <div style={{ margin: "20px" }}>
+        <Alert
+          message="Error"
+          description={error}
+          type="error"
+          showIcon
+        />
+      </div>
+    );
   }
 
   if (!userData) {
-    return <div>No user data available.</div>; // Fallback if no data is found
+    return (
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Alert
+          message="No Data"
+          description="No user data available."
+          type="info"
+          showIcon
+        />
+      </div>
+    );
   }
 
   return (
-    <div className="account-settings">
-      <h2>Account Settings</h2>
+    <div className="account-container">
+      <Title level={2} className="account-title">
+        Account Settings
+      </Title>
 
-      {/* Basic Info Section */}
-      <section>
-        <h3>Basic Info</h3>
-        <p>
-          <strong>First Name:</strong> {userData.firstName || "N/A"}
-        </p>
-        <p>
-          <strong>Last Name:</strong> {userData.lastName || "N/A"}
-        </p>
-        <p>
-          <strong>Email:</strong> {userData.email || "N/A"}
-        </p>
-      </section>
+      <Row gutter={[16, 16]} className="account-row">
+        {/* Basic Info Section */}
+        <Col span={12} className="account-col">
+          <Card title="Basic Info" bordered>
+            <p>
+              <Text strong>First Name:</Text> {userData.firstName || "N/A"}
+            </p>
+            <p>
+              <Text strong>Last Name:</Text> {userData.lastName || "N/A"}
+            </p>
+            <p>
+              <Text strong>Email:</Text> {userData.email || "N/A"}
+            </p>
+          </Card>
+        </Col>
 
-      {/* Account Info Section */}
-      <section>
-        <h3>Account Info</h3>
-        <p>
-          <strong>Username:</strong> {userData.username || "N/A"}
-        </p>
-        <p>
-          <strong>Password:</strong> ******** {/* Masking the password */}
-        </p>
-      </section>
+        {/* Account Info Section */}
+        <Col span={12} className="account-col">
+          <Card title="Account Info" bordered>
+            <p>
+              <Text strong>Username:</Text> {userData.username || "N/A"}
+            </p>
+            <p>
+              <Text strong>Password:</Text> ********
+            </p>
+          </Card>
+        </Col>
 
-      {/* Contact Info Section */}
-      <section>
-        <h3>Contact Info</h3>
-        <p>
-          <strong>Phone Number:</strong> {userData.phoneNo || "N/A"}
-        </p>
-      </section>
+        {/* Contact Info Section */}
+        <Col span={12} className="account-col">
+          <Card title="Contact Info" bordered>
+            <p>
+              <Text strong>Phone Number:</Text> {userData.phoneNo || "N/A"}
+            </p>
+          </Card>
+        </Col>
 
-      {/* Documents Section */}
-      <section>
-        <h3>Documents</h3>
-        <p>
-          <strong>License Number:</strong> {userData.licenseNo || "N/A"}
-        </p>
-      </section>
+        {/* Documents Section */}
+        <Col span={12} className="account-col">
+          <Card title="Documents" bordered>
+            <p>
+              <Text strong>License Number:</Text> {userData.licenseNo || "N/A"}
+            </p>
+          </Card>
+        </Col>
 
-      {/* User Type Section */}
-      <section>
-        <h3>User Type</h3>
-        <p>
-          <strong>Type:</strong> {userData.userType || "N/A"}
-        </p>
-      </section>
+        {/* User Type Section */}
+        <Col span={24} className="account-col">
+          <Card title="User Type" bordered>
+            <p>
+              <Text strong>Type:</Text> {userData.userType || "N/A"}
+            </p>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

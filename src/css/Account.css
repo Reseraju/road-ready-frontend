@@ -1,87 +1,71 @@
-.account-settings {
-    font-family: Arial, sans-serif;
-    color: #f0f0f0;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: #181818;
-    border-radius: 8px;
-    width: 95%;
-    max-width: 1000px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+/* General styles for the account settings container */
+.account-container {
+  padding: 20px;
+  max-width: 900px; /* Reduced width for a smaller size */
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Align content to the left */
+}
+
+/* Title styling */
+.account-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px; /* Increased font size */
+  font-weight: bold;
+  color: #333;
+}
+
+/* Row styling for proper spacing */
+.account-row {
+  margin: 0 -8px; /* Matches Ant Design's gutter */
+}
+
+/* Column styling for cards */
+.account-col {
+  padding: 8px; /* Matches Ant Design's gutter */
+}
+
+/* Card styling */
+.ant-card {
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 16px; /* Increased font size */
+}
+
+/* Card hover effect */
+.ant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Strong text styling for labels */
+.ant-typography-strong {
+  color: #555;
+  font-weight: 600;
+}
+
+/* Card content spacing */
+.ant-card-body p {
+  margin-bottom: 12px;
+  font-size: 16px; /* Increased font size */
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .account-container {
+    padding: 10px;
   }
-  
-  h2 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    color: #ffffff;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
+
+  .account-title {
+    font-size: 20px;
   }
-  
-  h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #cccccc;
-    border-bottom: 1px solid #444;
-    padding-bottom: 5px;
+
+  .ant-card {
+    padding: 12px;
   }
-  
-  section {
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-  }
-  
-  p {
-    margin: 5px 0;
-    font-size: 1em;
-    line-height: 1.6;
-  }
-  
-  strong {
-    font-weight: bold;
-    color: #cccccc;
-  }
-  
-  .profile-picture-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-  }
-  
-  .profile-picture {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border: 2px solid #333;
-  }
-  
-  button {
-    padding: 8px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
-  
-  .upload-btn {
-    background-color: #4caf50;
-    color: white;
-    transition: background-color 0.3s;
-  }
-  
-  .upload-btn:hover {
-    background-color: #45a049;
-  }
-  
-  .delete-btn {
-    background-color: #f44336;
-    color: white;
-    transition: background-color 0.3s;
-  }
-  
-  .delete-btn:hover {
-    background-color: #e53935;
-  }
-  
+}
