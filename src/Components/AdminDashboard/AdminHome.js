@@ -72,7 +72,7 @@ const AdminDashboard = () => {
             {
               key: '3',
               icon: <UsergroupAddOutlined />,
-              label: 'Customers',
+              label: 'Users',
             },
             {
               key: '4',

@@ -15,7 +15,7 @@ import Alert from '@mui/material/Alert';
 import { useAuth } from '../context/AuthContext';
 import "../css/ReseravationModal.css";
 
-const steps = ['Enter Dates', 'Make Payment', 'Confirmation'];
+const steps = ['Enter Dates', 'Reservation Confirmation', 'Make Payment'];
 
 const ReservationModal = ({ open, onClose, car, onReserve }) => {
   const { userId } = useAuth(); // Access userId from AuthContext
@@ -23,6 +23,7 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
   const [pickupDate, setPickupDate] = useState('');
   const [dropoffDate, setDropoffDate] = useState('');
   const [paymentDetails, setPaymentDetails] = useState('');
+  const [reservationId, setReservationId] = useState(null); // Store created reservation ID
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -41,6 +42,7 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
     setPickupDate('');
     setDropoffDate('');
     setPaymentDetails('');
+    setReservationId(null);
   };
 
   const handleSnackbarClose = (event, reason) => {
@@ -51,7 +53,7 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
   };
 
   const handleConfirmReservation = async () => {
-    setLoading(true); // Start loading indicator
+    setLoading(true);
 
     const reservationDetails = {
       userId,
@@ -61,7 +63,7 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
       pickupTime: '10:00:00', // Static for simplicity
       dropoffTime: '15:00:00', // Static for simplicity
       extraCharge: 50.0, // Static for simplicity
-      reservationStatus: 'CONFIRMED',
+      reservationStatus: 'PENDING', // Start with pending until payment
     };
 
     try {
@@ -86,16 +88,61 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
       }
 
       const data = await response.json();
-      setSnackbarMessage('Reservation successful!');
+      setSnackbarMessage('Reservation created successfully. Proceed to payment.');
       setSnackbarSeverity('success');
-      onReserve(pickupDate, dropoffDate, paymentDetails); // Update parent
+      setReservationId(data.reservationId); // Save reservation ID for payment
+      onReserve(pickupDate, dropoffDate); // Notify parent
+      handleNext(); // Move to payment step
+    } catch (error) {
+      setSnackbarMessage(`Error: ${error.message}`);
+      setSnackbarSeverity('error');
+    } finally {
+      setLoading(false);
+      setOpenSnackbar(true);
+    }
+  };
+
+  const handleMakePayment = async () => {
+    setLoading(true);
+
+    const paymentDetailsObj = {
+      reservationId,
+      amount: 75.0, // Example amount; adjust as needed
+      paymentMethod: paymentDetails,
+      paymentTimestamp: new Date().toISOString(),
+      paymentStatus: 'COMPLETED', // Assume success for simplicity
+    };
+
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('Authentication token not found.');
+
+      const response = await fetch(
+        'http://localhost:8081/api/payments/makePayment',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(paymentDetailsObj),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Payment failed.');
+      }
+
+      setSnackbarMessage('Payment successful! Your reservation is confirmed.');
+      setSnackbarSeverity('success');
       handleReset();
       onClose();
     } catch (error) {
       setSnackbarMessage(`Error: ${error.message}`);
       setSnackbarSeverity('error');
     } finally {
-      setLoading(false); // Stop loading indicator
+      setLoading(false);
       setOpenSnackbar(true);
     }
   };
@@ -151,6 +198,11 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
             </>
           )}
           {activeStep === 1 && (
+            <Typography variant="body1" sx={{ mb: 2 }}>
+              Reservation created successfully! Proceed to payment to confirm.
+            </Typography>
+          )}
+          {activeStep === 2 && (
             <>
               <Typography variant="body1" sx={{ mb: 2 }}>
                 Please enter your payment details:
@@ -166,20 +218,6 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
               />
             </>
           )}
-          {activeStep === 2 && (
-            <Typography variant="body1" sx={{ mb: 2 }}>
-              Reservation complete! Your car is reserved for the following dates:
-              <ul className='specifications-list'>
-                <li>
-                  <strong>Pick-up Date:</strong> {pickupDate || 'Not set'}
-                </li>
-                <li>
-                  <strong>Drop-off Date:</strong> {dropoffDate || 'Not set'}
-                </li>
-              </ul>
-              Thank you for choosing our service!
-            </Typography>
-          )}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
             {activeStep > 0 && (
               <Button variant="outlined" color="primary" onClick={handleBack}>
@@ -190,22 +228,23 @@ const ReservationModal = ({ open, onClose, car, onReserve }) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleNext}
+                onClick={activeStep === 0 ? handleConfirmReservation : handleNext}
                 disabled={
                   activeStep === 0 && (!pickupDate || !dropoffDate) // Disable if no dates selected
                 }
+                startIcon={loading && <CircularProgress size={20} />}
               >
-                Next
+                Confirm Reservation
               </Button>
             ) : (
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleConfirmReservation}
+                onClick={handleMakePayment}
                 disabled={!paymentDetails || loading} // Disable if no payment details or loading
                 startIcon={loading && <CircularProgress size={20} />}
               >
-                Confirm
+                Confirm Payment
               </Button>
             )}
           </Box>

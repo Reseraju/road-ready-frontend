@@ -51,7 +51,7 @@ const ProfileSidebarExample = () => {
     <SidebarPushable as={Segment} style={{ minHeight: '100vh', overflow: 'hidden' }}>
       {/* Pass userType as a prop */}
       <ProfileSidebar userType={userType} />
-      <SidebarPusher style={{ marginLeft: '150px' }}>
+      <SidebarPusher style={{ marginLeft: '10px' }}>
         <Segment basic>
           <Header as="h3" style={{ color: 'white' }}>
             <Outlet />

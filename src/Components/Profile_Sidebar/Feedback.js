@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, TextArea, Button, Message, Dropdown, Header, Segment } from "semantic-ui-react";
 import { useAuth } from "../../context/AuthContext"; // Ensure the correct path to your AuthContext
+import '../../css/Feedback.css';
 
 const Feedback = () => {
   const [carId, setCarId] = useState(""); // ID of the car being reviewed
@@ -60,7 +61,7 @@ const Feedback = () => {
       className="feedback"
       style={{
         maxWidth: "600px",
-        margin: "0 auto",
+        // margin: "0 auto",
         padding: "20px",
         backgroundColor: "#1b1c1d",
         color: "#fff",

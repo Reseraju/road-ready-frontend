@@ -14,7 +14,7 @@ export default function Booking() {
   const fetchReservations = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8081/getAllReservations', {
+      const response = await axios.get('http://localhost:8081/api/reservations/getAllReservations', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,7 +37,7 @@ export default function Booking() {
 
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8081/getReservationsByUserId/${searchUserId}`,
+        `http://localhost:8081/api/reservations/getReservationsByUserId/${searchUserId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ export default function Booking() {
   const updateReservation = async () => {
     try {
       await axios.put(
-        `http://localhost:8081/updateReservation/${editingReservation.reservationId}`,
+        `http://localhost:8081/api/reservations/updateReservation/${editingReservation.reservationId}`,
         editingReservation,
         {
           headers: {
@@ -77,7 +77,7 @@ export default function Booking() {
   // Delete a reservation
   const deleteReservation = async (reservationId) => {
     try {
-      await axios.delete(`http://localhost:8081/deleteReservation/${reservationId}`, {
+      await axios.delete(`http://localhost:8081/api/reservations/deleteReservation/${reservationId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -103,7 +103,7 @@ export default function Booking() {
 
   useEffect(() => {
     fetchReservations();
-  }, []);
+  }, [searchUserId]);
 
   // Table columns
   const columns = [
@@ -114,15 +114,15 @@ export default function Booking() {
     },
     {
       title: 'User ID',
-      dataIndex: 'user',
-      key: 'user',
-      render: (user) => user?.userId || 'N/A',
+      dataIndex: 'userId',
+      key: 'userId',
+      // render: (user) => user?.userId || 'N/A',
     },
     {
       title: 'Car',
-      dataIndex: 'car',
-      key: 'car',
-      render: (car) => car?.make + ' ' + car?.model || 'N/A',
+      dataIndex: 'carId',
+      key: 'carId',
+      // render: (car) => car?.make + ' ' + car?.model || 'N/A',
     },
     {
       title: 'Pickup Date',

@@ -170,7 +170,7 @@ const Reservations = () => {
           {reservations.map((reservation, index) => (
             <tr key={reservation.reservationId}>
               <td>{index + 1}</td>
-              <td>{reservation.car ? reservation.car.carName : "N/A"}</td> {/* Assuming car has a carName field */}
+              <td>{reservation.carId || "N/A"}</td> {/* Assuming car has a carName field */}
               <td>{reservation.pickupDate || "N/A"}</td>
               <td>{reservation.dropoffDate || "N/A"}</td>
               <td>{reservation.pickupTime || "N/A"}</td>
