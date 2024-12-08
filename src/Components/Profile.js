@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, Icon, SidebarPushable, SidebarPusher, Segment, Header, Image } from 'semantic-ui-react';
 import { useAuth } from '../context/AuthContext';
 
 // ProfileSidebar Component
-const ProfileSidebar = ({ userType }) => (
+const ProfileSidebar = ({ userType, username }) => (
   <Sidebar as={Menu} direction="left" vertical visible width="wide">
     <MenuItem>
       <Image
@@ -14,7 +14,7 @@ const ProfileSidebar = ({ userType }) => (
         centered
       />
       <Header as="h3" textAlign="center">
-        John Doe
+        {username || 'Guest'}
       </Header>
       <p style={{ textAlign: 'center', color: 'gray' }}>
         {userType || 'Guest'}
@@ -45,13 +45,44 @@ const ProfileSidebar = ({ userType }) => (
 
 // ProfileSidebarExample Component
 const ProfileSidebarExample = () => {
-  const { userType } = useAuth(); // Fetch userType from AuthContext
+  const { userId, userType } = useAuth(); // Fetch userId and userType from AuthContext
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error('Authentication token not found.');
+
+        const response = await fetch(`http://localhost:8081/users/getUser/${userId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to fetch user data.');
+        }
+
+        const data = await response.json();
+        setUsername(data.username);
+      } catch (error) {
+        console.error('Error fetching username:', error.message);
+      }
+    };
+
+    if (userId) {
+      fetchUserData();
+    }
+  }, [userId]);
 
   return (
     <SidebarPushable as={Segment} style={{ minHeight: '100vh', overflow: 'hidden' }}>
-      {/* Pass userType as a prop */}
-      <ProfileSidebar userType={userType} />
-      <SidebarPusher style={{ marginLeft: '10px' }}>
+      {/* Pass userType and username as props */}
+      <ProfileSidebar userType={userType} username={username} />
+      <SidebarPusher style={{ marginLeft: '150px' }}>
         <Segment basic>
           <Header as="h3" style={{ color: 'white' }}>
             <Outlet />

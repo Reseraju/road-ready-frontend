@@ -101,9 +101,7 @@ const Payment = () => {
     <div className="payment">
       <h2>Payment Methods</h2>
 
-      <Button primary onClick={() => setIsAddModalOpen(true)}>
-        Add Payment
-      </Button>
+      
 
       <Table celled>
         <Table.Header>
