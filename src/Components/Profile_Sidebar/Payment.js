@@ -122,7 +122,7 @@ const Payment = () => {
       <Table.Cell>{payment.paymentMethod}</Table.Cell>
       <Table.Cell>{payment.paymentDate}</Table.Cell>
       <Table.Cell>
-        {payment.reservation ? payment.reservation.reservationId : "N/A"}
+        {payment.reservationId || "N/A"}
       </Table.Cell>
       <Table.Cell>{payment.paymentStatus}</Table.Cell>
     </Table.Row>
