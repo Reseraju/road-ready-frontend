@@ -112,11 +112,11 @@ const AdminDashboard = () => {
           />
 
           {/* Search Input */}
-          <Input
+          {/* <Input
             prefix={<SearchOutlined />}
             placeholder="Search"
             style={{ width: 400, marginRight: 30 }}
-          />
+          /> */}
 
         </Header>
 

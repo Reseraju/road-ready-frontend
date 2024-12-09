@@ -206,13 +206,17 @@ export default function Booking() {
       </div>
 
       <Table
-        dataSource={reservations}
-        columns={columns}
-        rowKey="reservationId"
-        loading={loading}
-        pagination={{ pageSize: 5 }}
-        rowClassName="reservation-list-row"
-      />
+  dataSource={reservations}
+  columns={columns}
+  rowKey="reservationId"
+  loading={loading}
+  pagination={{
+    pageSize: 5,
+    className: 'custom-pagination', // Apply the same custom class
+  }}
+  rowClassName="reservation-list-row"
+/>
+
 
       {/* Modal for Editing Reservation */}
       <Modal
