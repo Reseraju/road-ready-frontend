@@ -29,7 +29,10 @@ function LoginPage() {
           navigate('/');
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        alert("Invalid credentials")
+        console.log(e)
+      });
   };
 
   return (
