@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react';
 import '../css/Login.css';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { useAuth } from '../context/AuthContext';
 function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] =React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const { login } = useAuth(); // Access login function from context
   const navigate = useNavigate();
 
@@ -29,7 +31,10 @@ function LoginPage() {
           navigate('/');
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        setErrorMessage("Invalid credentials!");
+      });
   };
 
   return (
@@ -47,6 +52,12 @@ function LoginPage() {
           <Header as="h2" color="blue" textAlign="center">
             Log in to your account
           </Header>
+          {errorMessage && (
+            <Message negative>
+              <Message.Header>Login Failed</Message.Header>
+              <p>{errorMessage}</p>
+            </Message>
+          )}
           <Form size="large">
             <Segment stacked>
               <Form.Input
@@ -64,11 +75,20 @@ function LoginPage() {
                 icon="lock"
                 iconPosition="left"
                 placeholder="Password"
-                type="password"
+                // type="password"
+                type={showPassword? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-              />
+              >
+                <input />
+                <Icon
+                name={showPassword ? "eye slash": "eye"}
+                link
+                onClick={()=>setShowPassword(!showPassword)}
+                style={{cursor: "pointer", position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", color:"white"}}
+                />
+              </Form.Input>
               <Button color="blue" fluid size="large" type="button" onClick={signin}>
                 Login
               </Button>
