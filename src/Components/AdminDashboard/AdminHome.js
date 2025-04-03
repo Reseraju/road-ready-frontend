@@ -36,9 +36,6 @@ const AdminDashboard = () => {
         navigate('customers');
         break;
       case '4':
-        navigate('earnings');
-        break;
-      case '5':
         navigate('reports');
         break;
       default:
@@ -76,11 +73,6 @@ const AdminDashboard = () => {
             },
             {
               key: '4',
-              icon: <DollarCircleOutlined />,
-              label: 'Earnings',
-            },
-            {
-              key: '5',
               icon: <LineChartOutlined />,
               label: 'Reports',
             },
