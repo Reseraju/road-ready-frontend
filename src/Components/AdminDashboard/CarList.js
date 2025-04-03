@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, message, Modal, Input, Form } from 'antd';
 import axios from 'axios';
+import "../../css/CarList.css";
 
 export default function CarList() {
   const [cars, setCars] = useState([]);
@@ -259,13 +260,17 @@ export default function CarList() {
         </Button>
       </div>
       <Table
-        dataSource={cars}
-        columns={columns}
-        rowKey="carId"
-        loading={loading}
-        pagination={{ pageSize: 5 }}
-        rowClassName="car-list-row"
-      />
+  dataSource={cars}
+  columns={columns}
+  rowKey="carId"
+  loading={loading}
+  pagination={{
+    pageSize: 5,
+    className: 'custom-pagination', // Add a custom class
+  }}
+  rowClassName="car-list-row"
+/>
+
 
       {/* Modal for Editing Car */}
       <Modal

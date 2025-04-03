@@ -176,7 +176,16 @@ export default function Customers() {
         </Button>
       </div>
 
-      <Table dataSource={users} columns={columns} rowKey="userId" pagination={{ pageSize: 5 }} loading={loading} />
+      <Table
+  dataSource={users}
+  columns={columns}
+  rowKey="userId"
+  pagination={{
+    pageSize: 5,
+    className: 'custom-pagination', // Reuse the custom class
+  }}
+  loading={loading}
+/>
 
       {/* Add User Modal */}
       <Modal
